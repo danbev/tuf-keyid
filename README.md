@@ -7,7 +7,7 @@ prints out the `key_id` for it.
 $ cargo install --path .
 ```
 
-Running:
+### Usage
 ```console
 $ tuf-keyid --json='{
             "keytype": "rsa",
@@ -18,7 +18,7 @@ $ tuf-keyid --json='{
     }'
 ```
 
-Running using cargo:
+### Usage using cargo
 ```console
 $ cargo r -q -- --json='{
             "keytype": "rsa",
