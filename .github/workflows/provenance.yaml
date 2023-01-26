@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: tuf-keyid
-          path: ./tuf_keyid
+          path: ./tuf-keyid
 
   provenance:
     needs: [build]
