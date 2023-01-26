@@ -1,0 +1,34 @@
+name: Publish 
+
+on: push 
+
+jobs:
+  build:
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+
+      - name: Build using cargo
+        run: |
+          cargo build --release
+          cp target/release/tuf-keyid .
+
+      - name: Generate subject
+        id: hash
+        run: |
+          set -euo pipefail
+          echo "hashes=$(sha256sum tuf-keyid | base64 -w0)" >> "$GITHUB_OUTPUT"
+
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read # To read the workflow path.
+      id-token: write # To sign the provenance.
+      contents: write # To add assets to a release.
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.hashes }}"
+      upload-assets: false # Optional: Upload to a new release
