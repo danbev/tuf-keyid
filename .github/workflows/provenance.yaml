@@ -35,9 +35,10 @@ jobs:
       upload-assets: false # Optional: Upload to a new release
 
   print-attestation:
+    runs-on: ubuntu-20.04
     needs: [provenance]
     steps:
       - name: Print Provenance
-      run: |
-        cat tuf-keyid.intoto.jsonl | jq 
-        cat tuf-keyid.intoto.jsonl | jq -r '.payload' | base64 -d | jq
+        run: |
+          cat tuf-keyid.intoto.jsonl | jq 
+          cat tuf-keyid.intoto.jsonl | jq -r '.payload' | base64 -d | jq
