@@ -36,6 +36,8 @@ jobs:
 
   print-attestation:
     needs: [provenance]
-    run: |
-      cat tuf-keyid.intoto.jsonl | jq 
-      cat tuf-keyid.intoto.jsonl | jq -r '.payload' | base64 -d | jq
+    steps:
+      - name: Print Provenance
+      run: |
+        cat tuf-keyid.intoto.jsonl | jq 
+        cat tuf-keyid.intoto.jsonl | jq -r '.payload' | base64 -d | jq
